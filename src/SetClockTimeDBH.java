@@ -24,34 +24,36 @@ public class SetClockTimeDBH extends Application {
         TextField minutes = new TextField("Minutes");
         TextField seconds = new TextField("Seconds");
 
-        HBox hBox = new HBox();
+        HBox hBox = new HBox(25);
         hBox.setPadding(new Insets(20, 20, 20, 20));
         hBox.getChildren().addAll(hours, minutes, seconds);
+        hBox.setAlignment(Pos.CENTER);
 
-        pane.getChildren().addAll(clock, hBox);
-
+        pane.setCenter(clock);
+        pane.setBottom(hBox);
 
         hours.setOnKeyPressed(a -> {
             if (a.getCode().equals(KeyCode.ENTER)){
-                clock.setHour(Integer.parseInt(a.getCharacter()));
+                clock.setHour(Integer.parseInt(a.getText()));
+
             }
         });
 
         minutes.setOnKeyPressed(a -> {
             if (a.getCode().equals(KeyCode.ENTER)) {
-                clock.setMinute(Integer.parseInt(a.getCharacter()));
+                clock.setMinute(Integer.parseInt(a.getText()));
             }
         });
 
         seconds.setOnKeyPressed(a -> {
             if (a.getCode().equals(KeyCode.ENTER)) {
-                clock.setSecond(Integer.parseInt(a.getCharacter()));
+                clock.setSecond(Integer.parseInt(a.getText()));
             }
         });
 
         Scene scene = new Scene(pane, 1000, 1000);
-        /*clock.setCenterY(scene.getHeight() / 2);
-        clock.setCenterX(scene.getWidth()/2);*/
+        clock.setCenterY(scene.getHeight() / 2);
+        clock.setCenterX(scene.getWidth()/2);
         primaryStage.setTitle("Set Clock");
         primaryStage.setScene(scene);
         primaryStage.show();

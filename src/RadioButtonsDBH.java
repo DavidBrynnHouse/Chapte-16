@@ -52,7 +52,7 @@ public class RadioButtonsDBH extends Application{
 
         //Pane to be set in the center Hbox
         Pane smallPane = new Pane();
-        Text text = new Text("JAVA++");
+        Text text = new Text("JAV(A+)+");
         smallPane.setTranslateY(Y / 2);
         smallPane.getChildren().add(text);
 
