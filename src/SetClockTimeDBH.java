@@ -1,10 +1,12 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -20,9 +22,9 @@ public class SetClockTimeDBH extends Application {
         DetailedClockPane clock = new DetailedClockPane();
         BorderPane pane = new BorderPane();
 
-        TextField hours = new TextField("Hours");
-        TextField minutes = new TextField("Minutes");
-        TextField seconds = new TextField("Seconds");
+        TextField hours = new TextField();
+        TextField minutes = new TextField();
+        TextField seconds = new TextField();
 
         HBox hBox = new HBox(25);
         hBox.setPadding(new Insets(20, 20, 20, 20));
@@ -35,27 +37,27 @@ public class SetClockTimeDBH extends Application {
         hours.setOnKeyPressed(a -> {
             if (a.getCode().equals(KeyCode.ENTER)){
                 clock.setHour(Integer.parseInt(a.getText()));
-
             }
         });
 
-        minutes.setOnKeyPressed(a -> {
-            if (a.getCode().equals(KeyCode.ENTER)) {
-                clock.setMinute(Integer.parseInt(a.getText()));
+        minutes.setOnKeyPressed(b -> {
+            if (b.getCode().equals(KeyCode.ENTER)) {
+                clock.setMinute(Integer.parseInt(b.getText()));
             }
         });
 
-        seconds.setOnKeyPressed(a -> {
-            if (a.getCode().equals(KeyCode.ENTER)) {
-                clock.setSecond(Integer.parseInt(a.getText()));
+        seconds.setOnKeyPressed(c -> {
+            if (c.getCode().equals(KeyCode.ENTER)) {
+                clock.setSecond(Integer.parseInt(c.getText()));
             }
         });
 
         Scene scene = new Scene(pane, 1000, 1000);
         clock.setCenterY(scene.getHeight() / 2);
         clock.setCenterX(scene.getWidth()/2);
-        primaryStage.setTitle("Set Clock");
+        primaryStage.setTitle("Clock");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 }

@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -35,6 +36,8 @@ public class TextViewerDBH extends Application {
         BorderPane outerPane = new BorderPane();
         BorderPane innerPane = new BorderPane();
         Pane superInnerPane = new Pane();
+        Button viewBt = new Button("view");
+
 
         TextField field = new TextField("File Name:");
         Text area = new Text();
@@ -52,42 +55,42 @@ public class TextViewerDBH extends Application {
         innerPane.setCenter(superInnerPane);
 
         outerPane.setCenter(innerPane);
+        outerPane.setRight(viewBt);
         outerPane.setBottom(field);
 
         field.setOnMouseClicked(e -> {
             field.clear();
         });
 
-        field.setOnKeyPressed(e -> {
-            if (e.getCode().equals(KeyCode.ENTER)) {
-                fileLocation = field.getText();
-                File file = new File(fileLocation);
-                try {
-                    BufferedReader br = new BufferedReader(new FileReader(file));
+        viewBt.setOnAction(e -> {
+            fileLocation = field.getText();
+            File file = new File(fileLocation);
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
 
-                    while ((line = br.readLine()) != null) {
-                        lines.add(line);
-                    }
-                    br.close();
-                } catch (IOException ex) {}
-                StringBuilder sb = new StringBuilder();
-                for(String s : lines)
-                    sb.append(s + "\n");
-                area.setText(String.valueOf(sb));
-                area.setX(10);
-                area.setY(40);
+                while ((line = br.readLine()) != null) {
+                    lines.add(line);
+                }
+                br.close();
+            } catch (IOException ex) {
             }
+            StringBuilder sb = new StringBuilder();
+            for (String s : lines)
+                sb.append(s + "\n");
+            area.setText(String.valueOf(sb));
+            area.setX(horizontal.getValue());
+            area.setY(vertical.getValue());
         });
 
         horizontal.valueProperty().addListener(e -> {
             area.setX(horizontal.getValue() * superInnerPane.getWidth() /
                     horizontal.getMax());
-            });
+        });
 
         vertical.valueProperty().addListener(e -> {
-                area.setY(vertical.getValue() * superInnerPane.getHeight() /
-                        vertical.getMax());
-            });
+            area.setY((vertical.getMax() - vertical.getValue())
+                    * superInnerPane.getHeight() / vertical.getMax());
+        });
 
             Scene scene = new Scene(outerPane, X, Y);
             primaryStage.setScene(scene);
